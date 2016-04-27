@@ -2,6 +2,14 @@
 
 Strips whitespace from an HTML stream to reduce the size of the final payload.
 
+## Install
+
+Install with [npm](https://www.npmjs.com/package/minify-html-stream)
+
+```bash
+npm install --save minify-html-stream
+```
+
 ## Simple Example
 
 ```js
