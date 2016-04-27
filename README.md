@@ -43,7 +43,7 @@ const server = http.createServer(function (request, response) {
 server.listen(8000);
 ```
 
-# Configuration
+## Configuration
 ```js
 {
    stripComments: true, // remove HTML comments (except conditional comments). Default: true
@@ -51,7 +51,7 @@ server.listen(8000);
 }
 ```
 
-# Notes
+## Notes
 Minify HTML Stream is really naïve and conservative about how it goes about minification, because it sort of has to be. Pull requests are most welcome.
 
 Published under the [MIT License](http://opensource.org/licenses/MIT).
