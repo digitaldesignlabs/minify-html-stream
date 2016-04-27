@@ -1,6 +1,6 @@
 {
   "name": "minify-html-stream",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A streaming HTML minifier for Node.js",
   "main": "./lib/minify.js",
   "files": "./lib/minify.js",
