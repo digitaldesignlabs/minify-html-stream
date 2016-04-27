@@ -1,0 +1,20 @@
+{
+  "name": "minify-html-stream",
+  "version": "1.0.0",
+  "description": "A streaming HTML minifier for Node.js",
+  "main": "./lib/minify.js",
+  "files": "./lib/minify.js",
+  "contributors": [
+    "Mike Hall <mikehall314@gmail.com>"
+  ],
+  "keywords": [
+    "minify",
+    "html",
+    "stream",
+    "transform",
+    "minifier"
+  ],
+  "license": "MIT",
+  "bugs": "https://github.com/digitaldesignlabs/minify-html-stream/issues",
+  "repository": "digitaldesignlabs/minify-html-stream"
+}

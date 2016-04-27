@@ -1,0 +1,9 @@
+{
+    "maxlen": 120,
+    "node": true,
+    "esversion": 6,
+    "quotmark": "double",
+    "varstmt": true,
+    "undef": true,
+    "unused": true
+}
