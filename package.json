@@ -14,7 +14,15 @@
     "transform",
     "minifier"
   ],
+  "scripts": {
+    "pretest": "node ./node_modules/eslint/bin/eslint.js ./lib/**/*.js ./test/**/*.js",
+    "test": "node ./test/index.js"
+  },
   "license": "MIT",
   "bugs": "https://github.com/digitaldesignlabs/minify-html-stream/issues",
-  "repository": "digitaldesignlabs/minify-html-stream"
+  "repository": "digitaldesignlabs/minify-html-stream",
+  "devDependencies": {
+    "eslint": "^2.13.1",
+    "tape": "^4.6.0"
+  }
 }
