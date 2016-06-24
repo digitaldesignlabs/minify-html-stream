@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/digitaldesignlabs/minify-html-stream.svg?branch=master)](https://travis-ci.org/digitaldesignlabs/minify-html-stream)
+
 # Minify HTML Stream
 
 Strips whitespace from an HTML stream to reduce the size of the final payload.
