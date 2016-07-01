@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/digitaldesignlabs/minify-html-stream.svg)](https://travis-ci.org/digitaldesignlabs/minify-html-stream)
-[![Coverage Status](https://coveralls.io/repos/github/digitaldesignlabs/minify-html-stream/badge.svg)](https://coveralls.io/github/digitaldesignlabs/minify-html-stream)
+[![Build Status](https://travis-ci.org/digitaldesignlabs/minify-html-stream.svg?branch=master)](https://travis-ci.org/digitaldesignlabs/minify-html-stream)
+[![Coverage Status](https://coveralls.io/repos/github/digitaldesignlabs/minify-html-stream/badge.svg?branch=master)](https://coveralls.io/github/digitaldesignlabs/minify-html-stream)
 
 # Minify HTML Stream
 
