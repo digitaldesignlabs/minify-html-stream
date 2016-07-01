@@ -4,26 +4,27 @@
 
 const test = require("tape");
 const Minifier = require("../lib/minify").Minifier;
+const ReadableStream = require("stream").Readable;
 
-const Readable = require("stream").Readable;
-const inherits = require("util").inherits;
+class Source extends ReadableStream {
 
-function Source(content) {
-    Readable.call(this);
-    this.content = content;
-}
-
-inherits(Source, Readable);
-
-Source.prototype._read = function (bytes) {
-
-    if (this.content.length === 0) {
-        return this.push(null);
+    constructor(content) {
+        super();
+        this.content = content;
     }
 
-    this.push(this.content.slice(0, bytes));
-    this.content = this.content.slice(bytes);
-};
+    _read(bytes) {
+        if (this.content.length === 0) {
+            return this.push(null);
+        }
+        this.push(this.content.slice(0, bytes));
+        this.content = this.content.slice(bytes);
+    }
+}
+
+function stream(content) {
+    return new Source(content);
+}
 
 // Tests begin
 
@@ -32,7 +33,7 @@ test("make html smaller", assert => {
     const before = "<div>\n    <span>Text</span>\n</div>\n";
 
     let after = "";
-    new Source(before)
+    stream(before)
         .pipe(new Minifier())
         .on("data", chunk => {
             after += chunk;
@@ -46,7 +47,7 @@ test("make html smaller", assert => {
 test("strips comments (on)", assert => {
 
     let content = "";
-    new Source("before<!-- comment -->after")
+    stream("before<!-- comment -->after")
         .pipe(new Minifier())
         .on("data", chunk => {
             content += chunk;
@@ -60,7 +61,7 @@ test("strips comments (on)", assert => {
 test("strips comments (off)", assert => {
 
     let content = "";
-    new Source("before<!-- comment -->after")
+    stream("before<!-- comment -->after")
         .pipe(new Minifier({stripComments: false}))
         .on("data", chunk => {
             content += chunk;
@@ -74,7 +75,7 @@ test("strips comments (off)", assert => {
 test("leave conditional comments", assert => {
 
     let content = "";
-    new Source("before<!--[if IE]>for ie only<![endif]-->after")
+    stream("before<!--[if IE]>for ie only<![endif]-->after")
         .pipe(new Minifier())
         .on("data", chunk => {
             content += chunk;
@@ -88,13 +89,13 @@ test("leave conditional comments", assert => {
 test("do not touch pre tags", assert => {
 
     let content = "";
-    new Source("before<pre>foo\nbar\nbaz\n</pre>after")
+    stream("before<pre>foo\nbar\nbaz\n</pre>after")
         .pipe(new Minifier())
         .on("data", chunk => {
             content += chunk;
         })
         .on("end", () => {
-            assert.equal("before<pre>foo\nbar\nbaz\n</pre> after", content);
+            assert.equal("before<pre>foo\nbar\nbaz\n</pre>after", content);
             assert.end();
         });
 });
@@ -102,13 +103,13 @@ test("do not touch pre tags", assert => {
 test("do not touch script tags", assert => {
 
     let content = "";
-    new Source("before<script>foo\nbar\nbaz\n</script>after")
+    stream("before<script>foo\nbar\nbaz\n</script>after")
         .pipe(new Minifier())
         .on("data", chunk => {
             content += chunk;
         })
         .on("end", () => {
-            assert.equal("before<script>foo\nbar\nbaz\n</script> after", content);
+            assert.equal("before<script>foo\nbar\nbaz\n</script>after", content);
             assert.end();
         });
 });
@@ -116,13 +117,13 @@ test("do not touch script tags", assert => {
 test("do not touch style tags", assert => {
 
     let content = "";
-    new Source("before<style>foo\nbar\nbaz\n</style>after")
+    stream("before<style>foo\nbar\nbaz\n</style>after")
         .pipe(new Minifier())
         .on("data", chunk => {
             content += chunk;
         })
         .on("end", () => {
-            assert.equal("before<style>foo\nbar\nbaz\n</style> after", content);
+            assert.equal("before<style>foo\nbar\nbaz\n</style>after", content);
             assert.end();
         });
 });
@@ -130,29 +131,13 @@ test("do not touch style tags", assert => {
 test("do not touch textarea tags", assert => {
 
     let content = "";
-    new Source("before<textarea>foo\nbar\nbaz\n</textarea>after")
+    stream("before<textarea>foo\nbar\nbaz\n</textarea>after")
         .pipe(new Minifier())
         .on("data", chunk => {
             content += chunk;
         })
         .on("end", () => {
-            assert.equal("before<textarea>foo\nbar\nbaz\n</textarea> after", content);
-            assert.end();
-        });
-});
-
-test("strip space between attributes", assert => {
-
-    const before = "<img   src=\"image.png\"  width=\"50\"   height=\"50\">";
-
-    let content = "";
-    new Source(before)
-        .pipe(new Minifier())
-        .on("data", chunk => {
-            content += chunk;
-        })
-        .on("end", () => {
-            assert.equal(content, "<img src=\"image.png\" width=\"50\" height=\"50\"> ");
+            assert.equal("before<textarea>foo\nbar\nbaz\n</textarea>after", content);
             assert.end();
         });
 });

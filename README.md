@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/digitaldesignlabs/minify-html-stream.svg?branch=master)](https://travis-ci.org/digitaldesignlabs/minify-html-stream)
+[![Build Status](https://travis-ci.org/digitaldesignlabs/minify-html-stream.svg)](https://travis-ci.org/digitaldesignlabs/minify-html-stream)
+[![Coverage Status](https://coveralls.io/repos/github/digitaldesignlabs/minify-html-stream/badge.svg)](https://coveralls.io/github/digitaldesignlabs/minify-html-stream)
 
 # Minify HTML Stream
 
@@ -18,7 +19,7 @@ npm install --save minify-html-stream
 "use strict";
 
 const fetch = require("node-fetch");
-const Minifier = require("minify-html-stream");
+const Minifier = require("minify-html-stream").Minifier;
 
 fetch("http://example.com/").then(function (response) {
     response.body.pipe(new Minifier()).pipe(process.stdout);
@@ -33,12 +34,18 @@ fetch("http://example.com/").then(function (response) {
 
 // Declare variables
 const http = require("http");
-const Minifier = require("minify-html-stream");
+const talisman = require("talismanjs");
+const Minifier = require("minify-html-stream").Minifier;
 
 // Start a server
 const server = http.createServer(function (request, response) {
-    const myContentStream = generateHTMLContentStreamSomehow(request);
-    myContentStream.pipe(new Minifier()).pipe(response);
+    talisman.create("homepage.html").then(function (view) {
+        view.toStream().pipe(new Minifier()).pipe(response);
+    }).catch(function (error) {
+        response.writeHead(500);
+        response.write(error.message);
+        response.end();
+    });
 });
 
 // Start listening
@@ -48,8 +55,11 @@ server.listen(8000);
 ## Configuration
 ```js
 {
-   stripComments: true, // remove HTML comments (except conditional comments). Default: true
-   stripBetweenAttributes: true // remove spaces within attributes. Default: true
+    stripCarriageReturns: true, // remove carriage return characters (\r)
+    trimLines: true, // remove whitespace from the ends of lines
+    trimElements: true, // remove whitespace from around elements where it is safe
+    normalizeWhiteSpace: true, // normalize multiple whitespace characters to single characters
+    stripComments: true // remove HTML comments (except conditional comments)
 }
 ```
 
