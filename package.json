@@ -1,6 +1,6 @@
 {
   "name": "minify-html-stream",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A streaming HTML minifier for Node.js",
   "license": "MIT",
   "bugs": "https://github.com/digitaldesignlabs/minify-html-stream/issues",
@@ -8,10 +8,10 @@
   "main": "lib/minify.js",
   "author": "Digital Design Labs",
   "contributors": [
-      {
-          "name": "Mike Hall",
-          "email": "mikehall314@gmail.com>"
-      }
+    {
+      "name": "Mike Hall",
+      "email": "mikehall314@gmail.com>"
+    }
   ],
   "engines": {
     "node": ">=4.0"
@@ -24,9 +24,9 @@
     "minifier"
   ],
   "scripts": {
-      "pretest": "node_modules/eslint/bin/eslint.js lib/*.js tests/*.js",
-      "test": "node tests",
-      "test-travis": "node_modules/istanbul/lib/cli.js cover tests"
+    "pretest": "node_modules/eslint/bin/eslint.js lib/*.js tests/*.js",
+    "test": "node tests",
+    "test-travis": "node_modules/istanbul/lib/cli.js cover tests"
   },
   "devDependencies": {
     "coveralls": "^2.11.9",
